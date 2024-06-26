@@ -1,0 +1,68 @@
+---
+- hosts: cloud
+  gather_facts: yes
+  become: yes
+
+  vars:
+    shiv_pass: "$6$MspGXxPbx/5lYTOA$FTkgos2v3BlrMtU92nKco0V7y6emA7oR9yxmfCUPAtA/.3LIPAubwmtEZGAAHmoGskqsJTRGNmrVabu2M1Xv6."
+
+  tasks:
+    - name: add sudo package
+      apt:
+        name: sudo
+        state: present
+
+    - name: add user shiv
+      user:
+        name: shiv
+        password: "{{ shiv_pass }}"
+        comment: Shivanand Patil
+        uid: 1000
+        # group: admin,sudo,root
+        # append: yes
+        shell: /bin/bash
+        create_home: yes
+        password_lock: yes
+
+    - name: Add SSH public key
+      authorized_key:
+        user: shiv
+        key: "{{ lookup('file', '/Users/cloudgenius/.ssh/id_rsa.pub') }}"
+        state: present
+
+    - name: add shiv to sudoers
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        regexp: "^shiv ALL"
+        line: "shiv ALL=(ALL) NOPASSWD: ALL"
+        state: present
+      notify:
+        - restart ssh
+
+    - name: disallow root
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin No"
+        state: present
+      notify:
+        - restart ssh
+
+    - name: Totally block root access
+      file:
+        path: /root/.ssh/authorized_keys
+        state: absent
+
+    - name: disallow password auth
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication No"
+        state: present
+      notify:
+        - restart ssh
+
+  handlers:
+    - name: restart ssh
+      service: name=ssh
+        state=restarted

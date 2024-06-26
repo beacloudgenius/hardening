@@ -1,0 +1,14 @@
+---
+- hosts: cloud
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - name:
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
