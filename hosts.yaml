@@ -7,5 +7,5 @@ all:
           hosts:
             something:
               ansible_host: 5.78.89.198
-              ansible_user: shiv
+              ansible_user: root
               ansible_python_interpreter: /usr/bin/python3
