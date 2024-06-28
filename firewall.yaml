@@ -1,0 +1,35 @@
+---
+- hosts: cloud
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - name: add ufw package
+      apt:
+        name: ufw
+        state: present
+        update_cache: yes
+
+    - name: allow OPENSSH
+      community.general.ufw:
+        rule: allow
+        name: OpenSSH
+
+    - name: Allow all access to port 53 for DNS
+      community.general.ufw:
+        rule: allow
+        port: "53"
+
+    - name: Allow all access to port 80 for HTTP
+      community.general.ufw:
+        rule: allow
+        port: "80"
+
+    - name: Allow all access to port 443 for HTTPS
+      community.general.ufw:
+        rule: allow
+        port: "443"
+
+    - name: Enable UFW
+      community.general.ufw:
+        state: enabled
