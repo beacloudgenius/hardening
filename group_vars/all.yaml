@@ -1,0 +1,7 @@
+---
+# this is the user that has ssh access to these machines
+ansible_user: cloudgenius
+ansible_python_interpreter: /usr/bin/python3
+
+# Set your timezone
+system_timezone: "America/Los_Angeles"

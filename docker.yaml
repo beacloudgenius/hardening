@@ -1,5 +1,5 @@
 ---
-- hosts: whatever
+- hosts: dockerhost.cg.home.arpa
   gather_facts: yes
   become: yes
 

@@ -5,7 +5,6 @@ all:
       children:
         cloud:
           hosts:
-            something:
-              ansible_host: 164.92.79.36
-              ansible_user: root
-              ansible_python_interpreter: /usr/bin/python3
+            dockerhost.cg.home.arpa:
+              # ansible_host: 164.92.79.36
+              # ansible_user: root
