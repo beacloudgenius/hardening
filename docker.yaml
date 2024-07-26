@@ -1,5 +1,5 @@
 ---
-- hosts: nvidia.cg.home.arpa
+- hosts: dockerhost.cg.home.arpa
   gather_facts: yes
   become: yes
 
