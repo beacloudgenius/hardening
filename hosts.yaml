@@ -6,5 +6,6 @@ all:
         cloud:
           hosts:
             dockerhost.cg.home.arpa:
+            nvidia.cg.home.arpa:
               # ansible_host: 164.92.79.36
               # ansible_user: root

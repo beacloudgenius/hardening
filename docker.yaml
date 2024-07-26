@@ -1,5 +1,5 @@
 ---
-- hosts: dockerhost.cg.home.arpa
+- hosts: nvidia.cg.home.arpa
   gather_facts: yes
   become: yes
 
@@ -53,8 +53,8 @@
           - docker-buildx-plugin
           - docker-compose-plugin
 
-    # - name: adding docker users (for use without sudo)
-    #   user:
-    #     name: cloudgenius
-    #     append: yes
-    #     groups: docker
+    - name: adding docker users (for use without sudo)
+      user:
+        name: cloudgenius
+        append: yes
+        groups: docker

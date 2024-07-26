@@ -1,0 +1,17 @@
+---
+- hosts: nvidia.cg.home.arpa
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    - name: nvidia docker jammy
+      ansible.builtin.shell: |
+        sudo apt-get install linux-headers-$(uname -r)
+        sudo apt-key del 7fa2af80
+        wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+        sudo dpkg -i cuda-keyring_1.1-1_all.deb
+        sudo apt-get update
+        sudo apt-get install -y cuda
+        sudo apt-get install -y nvidia-gds
+        # sudo reboot
+        sudo apt-get update && sudo apt-get install -y nvidia-docker2
